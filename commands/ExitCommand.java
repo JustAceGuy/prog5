@@ -1,6 +1,6 @@
 package commands;
 
-public class ExitCommand implements Command{
+public class ExitCommand implements Command {
     public String desc() {return "exit without saving";}
 
     public void execute(){

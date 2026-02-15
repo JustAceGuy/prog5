@@ -1,21 +1,21 @@
 package commands;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Invoker {
-    static HashMap<String, Command> commands = new HashMap<>();
-    static {
-        commands.put("help", new HelpCommand(commands));
-        commands.put("exit", new ExitCommand());
-    }
     static Command command;
+    static HashMap<String, Command> commands = new HashMap<>();
+    //static Command[] history = new Command[15]; //find a better data struct for history
 
-    public static void setCommand(String name) {
-        command = commands.get(name); //TODO: add bad command name exception
+    static {
+        commands.put("help", new HelpCommand());
+        commands.put("exit", new ExitCommand());
+        commands.put("echo", new EchoCommand());
+        commands.put("add", new AddCommand());
+        commands.put("show", new ShowCommand());
     }
 
-    public static void executeCommand() {
-        command.execute();
+    public static void executeCommand(String name) {
+        commands.get(name).execute();
     }
 
 }
