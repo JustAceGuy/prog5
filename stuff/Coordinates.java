@@ -2,7 +2,7 @@ package stuff;
 
 public class Coordinates{
     private Integer x; //Максимальное значение поля: 926
-    private Float y=-1000f;//Значение поля должно быть больше -974, Поле не может быть null
+    private Float y;//Значение поля должно быть больше -974, Поле не может быть null
     public Coordinates() {
         Integer tmp = Message.intInput("x", true, 927, null);
         if (tmp != null) {this.x = tmp;}

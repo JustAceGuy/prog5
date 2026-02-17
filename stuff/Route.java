@@ -1,11 +1,9 @@
 package stuff;
 
-import java.util.Scanner;
-
 public class Route {
     public static Long instanceCounter = 0L;
     private Long id; //[+] Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name = ""; //[+] Поле не может быть null, Строка не может быть пустой
+    private String name; //[+] Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //[+] Поле не может быть null
     private java.time.LocalDateTime creationDate; //[+] Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Location from; //[+] Поле может быть null
@@ -15,22 +13,14 @@ public class Route {
     Route() {
         this.id = Route.instanceCounter++;
         this.creationDate = java.time.LocalDateTime.now();
-        Scanner sc = new Scanner(System.in);
 
-        while (name.isBlank()) {
-            System.out.print("Input Route name:\n>>> ");
-            this.name = sc.nextLine();
-            if (name.isBlank()) {System.out.println("name cannot be blank!");}
-        }
+        this.name = Message.stringInput("Route name", false);
 
         System.out.println("Coordinates:");
         this.coordinates = new Coordinates();
 
-        System.out.print("Add 'from' Location? (y/N)\n>>> ");
-        if (sc.nextLine().strip().equalsIgnoreCase("y")) { this.from = new Location(); }
-
-        System.out.print("Add 'to' Location? (y/N)\n>>> ");
-        if (sc.nextLine().strip().equalsIgnoreCase("y")) { this.to = new Location(); }
+        if (Message.ynPrompt("Add 'from' Location?")) { this.from = new Location(); }
+        if (Message.ynPrompt("Add 'to' Location?")) { this.from = new Location(); }
 
         this.distance = Message.longInput("distance", false, null, null);
 
@@ -40,6 +30,33 @@ public class Route {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void update() {
+        System.out.println(
+                "Which field to update?\n" +
+                        "1. name\n" +
+                        "2. Coordinates\n" +
+                        "3. (Location) from\n" +
+                        "4. (Location) to\n" +
+                        "5. distance");
+        int n = Message.intInput("number", false, 6, 0);
+        switch (n) {
+            case 1 -> this.name = Message.stringInput("name", false);
+            case 2 -> this.coordinates = new Coordinates();
+            case 3 -> this.from = new Location();
+            case 4 -> this.to = new Location();
+            case 5 -> this.distance = Message.longInput("distance", false, null, null);
+        }
+        System.out.println("Updated!");
     }
 
     @Override

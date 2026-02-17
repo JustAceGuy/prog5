@@ -1,11 +1,9 @@
-import commands.Command;
-
 import commands.Invoker;
 import java.util.Arrays;
 import java.util.Scanner;
 
 class Main {
-    public static void main() {
+    public static void main(String[] args) {
         System.out.print(">> ");
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) { //while (true) не подходит из-за Ctrl+D
@@ -18,6 +16,6 @@ class Main {
             } finally {
                 System.out.print(">> ");
             }
-        } //add end of command print somewhere
+        }
     }
 }

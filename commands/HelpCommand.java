@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class HelpCommand implements Command{
     public String desc() {
-        return "Outputs a list of all commands";
+        return "outputs a list of all commands";
     }
 
     public void execute(String... args) {

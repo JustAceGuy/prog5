@@ -1,7 +1,5 @@
 package commands;
 
-import com.sun.jdi.ClassNotPreparedException;
-
 public class PSZHCommand implements Command{
     @Override
     public String desc() {

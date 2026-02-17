@@ -48,7 +48,11 @@ public class CollectionHandler { //implements Comparable
     }
     //remove_by_id id : удалить элемент из коллекции по его id
 
-    public static void update_id() {}
+    public static void update_id(Long id) {
+        Route r = find_by_id(id);
+        if (r == null) {return;}
+        r.update();
+    }
     //update id {element} : обновить значение элемента коллекции, id которого равен заданному
     // уже вторая ф-ция юзает id
     // вынести логику нахождения по id в отдельный класс?
@@ -59,16 +63,26 @@ public class CollectionHandler { //implements Comparable
     //если его значение меньше, чем у наименьшего элемента этой коллекции
     // очевидно вызывать add после проверки
 
-    public static void filter_contains_name() {}
-    //filter_contains_name name : вывести элементы,
-    //значение поля name которых содержит заданную подстроку
-    // ого
+    public static void filter_contains_name(String pattern) {
+        for (Route r: routes) {
+            if (r.getName().contains(pattern)) {
+                System.out.println(r);
+            }
+        }
+    }
+
 
     public static void print_ascending() {}
     //print_ascending : вывести элементы коллекции в порядке возрастания
 
-    public static void print_unique_distance() {}
-    //print_unique_distance : вывести уникальные значения поля distance всех элементов в коллекции
+    public static void print_unique_distance() {
+        HashSet<Long> unqDist = new HashSet<>();
+        for (Route r: routes) {
+            unqDist.add(r.getDistance());
+        }
+        System.out.printf("Уникальные значения поля Distance:\n%s\nx", unqDist);
+    }
+
 
     public static void remove_greater() {}
     //remove_greater {element} : удалить из коллекции все элементы, превышающие заданный

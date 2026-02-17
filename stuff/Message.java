@@ -3,8 +3,31 @@ package stuff;
 import java.util.Scanner;
 
 public class Message {
+
+    public static Scanner sc = new Scanner(System.in);
+
+    static boolean ynPrompt(String question) {
+        System.out.print(question + " (y/N)\n>>> ");
+        return sc.nextLine().strip().equalsIgnoreCase("y");
+    }
+
+    static String stringInput(String varName, boolean isNullable) {
+        String ret;
+
+        System.out.print("Input " + varName + "\n>>> ");
+
+        while (true) {
+            ret = sc.nextLine().strip();
+            if (ret.isBlank()) {
+                if (isNullable) {return null;}
+                else {System.out.println(varName + " cannot be empty!");}
+            } else {
+                return ret;
+            }
+        }
+    }
+
     static Long longInput(String varName, boolean isNullable, Long upperBound, Long lowerBound) {
-        Scanner sc = new Scanner(System.in);
         boolean badInput = true;
         long ret = 0L;
 
@@ -34,7 +57,6 @@ public class Message {
     }
 
     static Integer intInput(String varName, boolean isNullable, Integer upperBound, Integer lowerBound) {
-        Scanner sc = new Scanner(System.in);
         boolean badInput = true;
         int ret = 0;
 
@@ -64,7 +86,6 @@ public class Message {
     }
 
     static Float floatInput(String varName, boolean isNullable, Float upperBound, Float lowerBound) {
-        Scanner sc = new Scanner(System.in);
         boolean badInput = true;
         float ret = 0f;
 
