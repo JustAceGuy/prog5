@@ -1,0 +1,2 @@
+<Route><coordinates><x>99</x><y>24.0</y></coordinates><from><x>2</x><y>3.0</y><z>1.0</z><name>itmo</name></from><to/><id>1</id><name>smol</name><distance>12</distance></Route>
+<Route><coordinates><x>123</x><y>345.0</y></coordinates><from><x>12213124</x><y>-3.1415</y><z>123.0</z><name>LOCNAME</name></from><to/><id>0</id><name>BIG</name><distance>999999</distance></Route>

@@ -122,4 +122,8 @@ public class CollectionHandler { //implements Comparable
     public static HashSet<Route> getRoutes() {
         return routes;
     }
+
+    public static void setRoutes(HashSet<Route> r) {
+        routes = r;
+    }
 }

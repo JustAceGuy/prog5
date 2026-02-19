@@ -3,14 +3,14 @@ import commands.Command;
 import handlers.CollectionHandler;
 import handlers.FileHandler;
 
-public class SaveCommand implements Command {
+public class LoadCommand implements Command {
     @Override
     public String desc() {
-        return "saves collection to a file";
+        return "load collection from the save file";
     }
 
     @Override
     public void execute(String... args) {
-        //FileHandler.save(CollectionHandler.getRoutes());
+        FileHandler.load();
     }
 }

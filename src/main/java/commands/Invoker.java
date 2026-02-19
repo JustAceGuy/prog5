@@ -18,6 +18,9 @@ public class Invoker {
         commands.put("help", new HelpCommand());
         commands.put("exit", new ExitCommand());
         commands.put("history", new HistoryCommand());
+        //TODO: fix history being broken when using execute_script
+        // either 1. stop history from updating during e_s
+        // or 2. fix the order of the commands being wrong
 
         // Basic collection manip
         commands.put("show", new ShowCommand());
@@ -43,6 +46,7 @@ public class Invoker {
         commands.put("more", new MoreCommand());
         commands.put("псж", new PSZHCommand());
         commands.put("echo", new EchoCommand());
+        commands.put("load", new LoadCommand());
 
     }
 

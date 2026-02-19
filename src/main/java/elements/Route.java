@@ -1,18 +1,31 @@
 package elements;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
 
 public class Route implements Comparable<Route> {
-    public static Long instanceCounter = 0L;
+
+    public static boolean isLoading = false;
+
+    private static Long instanceCounter = 0L;
     private Long id; //[+] Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //[+] Поле не может быть null, Строка не может быть пустой
+    private String name;
+    //[+] Поле не может быть null, Строка не может быть пустой
+    @JacksonXmlProperty(isAttribute = true)
     private Coordinates coordinates; //[+] Поле не может быть null
     private java.time.LocalDateTime creationDate; //[+] Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    @JacksonXmlProperty(isAttribute = true)
     private Location from; //[+] Поле может быть null
+    @JacksonXmlProperty(isAttribute = true)
     private Location to; //[+] Поле может быть null
     private Long distance; //[+] Поле не может быть null, Значение поля должно быть больше 1
 
+
     public Route() {
+        if (isLoading) {return;}
+
         this.id = Route.instanceCounter++;
         this.creationDate = java.time.LocalDateTime.now();
 
@@ -29,6 +42,7 @@ public class Route implements Comparable<Route> {
 
         System.out.printf("-- New Route '%s' created!\n", this.name);
     }
+
 
     public Long getId() {
         return id;

@@ -21,7 +21,9 @@ public class ExecuteScriptCommand implements Command {
     @Override
     public void execute(String... args) {
         try {
-            Reader in = new InputStreamReader(new FileInputStream(args[0]), StandardCharsets.UTF_8);
+            System.out.println(args[0]);
+            System.out.println(System.getProperty("user.dir"));
+            Reader in = new InputStreamReader(new FileInputStream("scripts/" + args[0]), StandardCharsets.UTF_8);
             Scanner sc = new Scanner(in);
             InputHandler.sc = sc;
             while (sc.hasNext()) {

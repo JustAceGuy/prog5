@@ -1,0 +1,34 @@
+plan:
+ history (check notes file) ->
+ script -> file I/O -> cyclical ->
+ -> javadoc :(
+
+
+[+] help
+[+] info
+[+] show
+[+] add {element}
+[+] clear
+[+] exit
+
+Cyclical commands
+[+] update id {element}
+[+] remove_by_id id
+C[+] add_if_min {element}
+C[+] remove_greater {element}
+[+] filter_contains_name name
+C[+] print_ascending
+[+] print_unique_distance
+C - needs Comparable implemintation
+
+
+File I/O
+[ ] save to xml via PrintWriter
+[ ] loading from a file via Scanner
+[ ] attach the above to a field var
+// program shouldn't crash with insufficent perms
+
+Meta
+[+] history
+[+] execute_script file_name
+
