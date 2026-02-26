@@ -1,2 +1,5 @@
-<Route><coordinates><x>99</x><y>24.0</y></coordinates><from><x>2</x><y>3.0</y><z>1.0</z><name>itmo</name></from><to/><id>1</id><name>smol</name><distance>12</distance></Route>
-<Route><coordinates><x>123</x><y>345.0</y></coordinates><from><x>12213124</x><y>-3.1415</y><z>123.0</z><name>LOCNAME</name></from><to/><id>0</id><name>BIG</name><distance>999999</distance></Route>
+<Route><coordinates><x>123</x><y>-5.55</y></coordinates><from><x>1</x><y>2.0</y><z>3.0</z><name>home</name></from><to/><id>4</id><name>route to nowhere</name><distance>56</distance></Route>
+<Route><coordinates><x>926</x><y>-900.0</y></coordinates><from><x>123214</x><y>4444444.0</y><z>-444444.4</z><name>BIGTOWN</name></from><to/><id>1</id><name>BIG</name><distance>123456</distance></Route>
+<Route><coordinates><x>-1</x><y>2.0</y></coordinates><from><x>6</x><y>7.0</y><z>8.0</z><name>miceville</name></from><to/><id>2</id><name>smol</name><distance>2</distance></Route>
+<Route><coordinates><x>2</x><y>424.0</y></coordinates><from><x>100</x><y>100.0</y><z>100.0</z><name>PSZH</name></from><to/><id>3</id><name>STUDIES</name><distance>50</distance></Route>
+<Route><coordinates><x>2</x><y>2.0</y></coordinates><from/><to/><id>5</id><name>2</name><distance>2</distance></Route>

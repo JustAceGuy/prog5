@@ -1,10 +1,11 @@
 package elements;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
 
+/**
+ * Route class - main class of the collection
+ */
 public class Route implements Comparable<Route> {
 
     public static boolean isLoading = false;
@@ -43,19 +44,30 @@ public class Route implements Comparable<Route> {
         System.out.printf("-- New Route '%s' created!\n", this.name);
     }
 
-
+    /**
+     * @return Route's id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @return Route's distance
+     */
     public Long getDistance() {
         return distance;
     }
 
+    /**
+     * @return Route's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Prompts user to update one of Route object's fields
+     */
     public void update() {
         System.out.println(
                 "Which field to update?\n" +
@@ -75,6 +87,14 @@ public class Route implements Comparable<Route> {
         System.out.println("Updated!");
     }
 
+    /**
+     * Set Route instanceCounter to id
+     * @param id new instanceCounter value
+     */
+    public static void updateInstanceCounter(Long id) {
+        instanceCounter = id;
+    }
+
 
     @Override
     public int compareTo(Route o) {
@@ -89,6 +109,9 @@ public class Route implements Comparable<Route> {
         return String.format("%s: %s", this.id, this.name);
     }
 
+    /**
+     * @return A more detailed String representation of Route object
+     */
     public String more() {
         return String.format("id%s - '%s'\n Coordinates: %s\n from: %s\n to: %s\n distance:%s",
                 this.id, this.name,

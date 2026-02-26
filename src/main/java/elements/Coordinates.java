@@ -2,6 +2,9 @@ package elements;
 
 import handlers.InputHandler;
 
+/**
+ * Coordinates class
+ */
 public class Coordinates{
     public Integer x; //Максимальное значение поля: 926
     public Float y;//Значение поля должно быть больше -974, Поле не может быть null

@@ -23,12 +23,13 @@ C - needs Comparable implemintation
 
 
 File I/O
-[ ] save to xml via PrintWriter
-[ ] loading from a file via Scanner
+[+] save to xml via PrintWriter
+[+] loading from a file via Scanner
 [ ] attach the above to a field var
 // program shouldn't crash with insufficent perms
 
 Meta
 [+] history
+[+] make history + execute_script work properly
 [+] execute_script file_name
 

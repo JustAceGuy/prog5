@@ -1,6 +1,6 @@
 package commands.file;
+
 import commands.Command;
-import handlers.CollectionHandler;
 import handlers.FileHandler;
 
 public class LoadCommand implements Command {

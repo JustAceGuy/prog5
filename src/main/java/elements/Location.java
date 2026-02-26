@@ -2,6 +2,9 @@ package elements;
 
 import handlers.InputHandler;
 
+/**
+ * Location class
+ */
 public class Location {
     public Long x;
     public Float y; //Поле не может быть null

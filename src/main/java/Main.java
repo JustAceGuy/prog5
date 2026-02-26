@@ -1,4 +1,5 @@
 import commands.Invoker;
+import handlers.InputHandler;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -6,7 +7,7 @@ import java.util.Scanner;
 class Main {
     public static void main(String[] args) {
         System.out.print(">> ");
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = InputHandler.sc;
         while (sc.hasNext()) { //while (true) не подходит из-за Ctrl+D
             String[] inp = sc.nextLine().strip().split(" ");
             String commandName = inp[0];

@@ -1,26 +1,33 @@
 package commands;
 
 import commands.basic.*;
-import commands.comparing.*;
-import commands.extra.*;
-import commands.file.*;
+import commands.comparing.AddMinCommand;
+import commands.comparing.PrintAscendingCommand;
+import commands.comparing.RemoveGreaterCommand;
+import commands.extra.EchoCommand;
+import commands.extra.MoreCommand;
+import commands.extra.PSZHCommand;
+import commands.file.ExecuteScriptCommand;
+import commands.file.LoadCommand;
+import commands.file.SaveCommand;
 import commands.info.*;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
 
+/**
+ * Class responsible for executing commands
+ */
 public class Invoker {
     static HashMap<String, Command> commands = new HashMap<>();
     static ArrayDeque<String> history = new ArrayDeque<>();
+    public static boolean historyWritable = true;
 
     static {
         // Meta
         commands.put("help", new HelpCommand());
         commands.put("exit", new ExitCommand());
         commands.put("history", new HistoryCommand());
-        //TODO: fix history being broken when using execute_script
-        // either 1. stop history from updating during e_s
-        // or 2. fix the order of the commands being wrong
 
         // Basic collection manip
         commands.put("show", new ShowCommand());
@@ -50,27 +57,42 @@ public class Invoker {
 
     }
 
+    /**
+     * Execute a specified command
+     * @param name String name of the command
+     * @param args command arguments
+     */
     public static void executeCommand(String name, String... args) {
         commands.get(name).execute(args);
         addToHistory(name);
     }
 
+    /**
+     * Write a command to history.
+     * @param name of the command to add
+     */
     private static void addToHistory(String name) {
+        if (!historyWritable) {return;} // stops execute_script commands from being added
+
         history.add(name);
         if (history.size() > 15) {
             history.removeFirst();
         }
     }
 
+    /**
+     * Returns history
+     * @return a list of last 15 commands
+     */
     public static ArrayDeque<String> getHistory() {
         return history;
     }
 
+    /**
+     * Returns all commands
+     * @return the HashMap of command name-object pairs
+     */
     public static HashMap<String, Command> getCommands() {
         return commands;
     }
-
-
-
-
 }

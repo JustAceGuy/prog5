@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ExecuteScriptCommand implements Command {
+    static int recursionDepth = 0;
+
     @Override
     public String desc() {
         return "execute a script from {file}";
@@ -20,9 +22,16 @@ public class ExecuteScriptCommand implements Command {
 
     @Override
     public void execute(String... args) {
+        Invoker.historyWritable = false;
+
+        if (recursionDepth >= 10) {
+            System.out.println("Recursion depth reached! Returning.");
+            return;
+        }
+
+        recursionDepth++;
+
         try {
-            System.out.println(args[0]);
-            System.out.println(System.getProperty("user.dir"));
             Reader in = new InputStreamReader(new FileInputStream("scripts/" + args[0]), StandardCharsets.UTF_8);
             Scanner sc = new Scanner(in);
             InputHandler.sc = sc;
@@ -39,6 +48,8 @@ public class ExecuteScriptCommand implements Command {
             System.out.println("File not found.");
         } finally {
             InputHandler.sc = new Scanner(System.in);
+            Invoker.historyWritable = true;
+            recursionDepth--;
         }
 
     }
