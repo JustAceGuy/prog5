@@ -2,6 +2,7 @@ package elements;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
+import handlers.Validator;
 
 /**
  * Route class - main class of the collection
@@ -30,7 +31,7 @@ public class Route implements Comparable<Route> {
         this.id = Route.instanceCounter++;
         this.creationDate = java.time.LocalDateTime.now();
 
-        this.name = InputHandler.stringInput("Route name", false);
+        this.name = InputHandler.stringInput("Route name", new Validator<String>());
 
         System.out.println("Coordinates:");
         this.coordinates = new Coordinates();
@@ -38,7 +39,7 @@ public class Route implements Comparable<Route> {
         if (InputHandler.ynPrompt("Add 'from' Location?")) { this.from = new Location(); }
         if (InputHandler.ynPrompt("Add 'to' Location?")) { this.from = new Location(); }
 
-        this.distance = InputHandler.longInput("distance", false, null, null);
+        this.distance = InputHandler.longInput("distance", new Validator<Long>());
 
 
         System.out.printf("-- New Route '%s' created!\n", this.name);
@@ -76,13 +77,16 @@ public class Route implements Comparable<Route> {
                         "3. (Location) from\n" +
                         "4. (Location) to\n" +
                         "5. distance");
-        int n = InputHandler.intInput("number", false, 6, 0);
+        int n = InputHandler.intInput("number", new Validator<Integer>()
+                .upper(6)
+                .lower(0));
+
         switch (n) {
-            case 1 -> this.name = InputHandler.stringInput("name", false);
+            case 1 -> this.name = InputHandler.stringInput("name", new Validator<String>());
             case 2 -> this.coordinates = new Coordinates();
             case 3 -> this.from = new Location();
             case 4 -> this.to = new Location();
-            case 5 -> this.distance = InputHandler.longInput("distance", false, null, null);
+            case 5 -> this.distance = InputHandler.longInput("distance", new Validator<Long>());
         }
         System.out.println("Updated!");
     }

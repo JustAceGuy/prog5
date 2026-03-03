@@ -2,6 +2,7 @@ package elements;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
+import handlers.Validator;
 
 /**
  * Coordinates class
@@ -14,10 +15,13 @@ public class Coordinates{
 
     public Coordinates() {
         if (Route.isLoading) {return;}
-        Integer tmp = InputHandler.intInput("x", true, 927, null);
-        if (tmp != null) {this.x = tmp;}
-        this.y = InputHandler.floatInput("y", false, null, -974f);
+        this.x = InputHandler.intInput("x", new Validator<Integer>()
+                .nullable()
+                .upper(927));
+        this.y = InputHandler.floatInput("y", new Validator<Float>()
+                .lower(-974f));
     }
+
 
     @Override
     public String toString() {
