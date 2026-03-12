@@ -1,6 +1,6 @@
-package commands.info;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 import handlers.CollectionHandler;
 
 public class InfoCommand implements Command {
@@ -12,5 +12,10 @@ public class InfoCommand implements Command {
     @Override
     public void execute(String... args) {
         CollectionHandler.info();
+    }
+
+    @Override
+    public String getName() {
+        return "info";
     }
 }

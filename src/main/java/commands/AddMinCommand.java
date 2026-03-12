@@ -1,10 +1,11 @@
-package commands.comparing;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
+import commands.meta.Undoable;
 import elements.Route;
 import handlers.CollectionHandler;
 
-public class AddMinCommand implements Command {
+public class AddMinCommand implements Command, Undoable {
     @Override
     public String desc() {
         return "add a Route if it's less than all the other Routes";
@@ -20,5 +21,10 @@ public class AddMinCommand implements Command {
         if (routes.length == 1) {
             CollectionHandler.remove_by_id(routes[0].getId());
         }
+    }
+
+    @Override
+    public String getName() {
+        return "add_if_min";
     }
 }

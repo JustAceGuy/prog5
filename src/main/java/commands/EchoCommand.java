@@ -1,6 +1,7 @@
-package commands.extra;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
+import handlers.OutputHandler;
 
 public class EchoCommand implements Command {
     public String desc() {
@@ -12,6 +13,11 @@ public class EchoCommand implements Command {
         for (String a : args) {
             out.append(a).append(" ");
         }
-        System.out.println(out);
+        OutputHandler.message(out);
+    }
+
+    @Override
+    public String getName() {
+        return "echo";
     }
 }

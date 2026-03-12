@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import handlers.InputHandler;
+import handlers.OutputHandler;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +49,7 @@ public class Route implements Comparable<Route> {
 
         this.name = InputHandler.stringInput("Route name", false);
 
-        System.out.println("Coordinates:");
+        OutputHandler.message("Coordinates:");
         this.coordinates = new Coordinates();
 
         if (InputHandler.ynPrompt("Add 'from' Location?")) { this.from = new Location(); }
@@ -57,7 +58,7 @@ public class Route implements Comparable<Route> {
         this.distance = InputHandler.longInput("distance", false, null, 1L);
 
 
-        System.out.printf("-- New Route '%s' created!\n", this.name);
+        OutputHandler.message("-- New Route '%s' created!", this.name);
     }
 
     public boolean validate() {
@@ -98,7 +99,7 @@ public class Route implements Comparable<Route> {
      * Prompts user to update one of Route object's fields
      */
     public void update() {
-        System.out.println(
+        OutputHandler.message(
                 "Which field to update?\n" +
                         "1. name\n" +
                         "2. Coordinates\n" +
@@ -113,7 +114,7 @@ public class Route implements Comparable<Route> {
             case 4 -> this.to = new Location();
             case 5 -> this.distance = InputHandler.longInput("distance", false, null, null);
         }
-        System.out.println("Updated!");
+        OutputHandler.message("Updated!");
     }
 
     /**

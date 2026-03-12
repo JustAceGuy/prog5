@@ -5,8 +5,6 @@ import elements.Route;
 import java.util.Arrays;
 import java.util.HashSet;
 
-//todo:
-//save : сохранить коллекцию в файл
 
 /**
  * Class responsible for all changes in the collection
@@ -18,8 +16,10 @@ public class CollectionHandler { //implements Comparable
     /**
      * Removes all elements from the collection.
      */
-    public static void clear() {
+    public static Route[] clear() {
+        Route[] r = routes.toArray(new Route[0]);
         routes.clear();
+        return r;
     }
 
     /**
@@ -27,7 +27,7 @@ public class CollectionHandler { //implements Comparable
      */
     public static void show() {
         for (Route r: routes) {
-            System.out.println(r);
+            OutputHandler.message(r);
         }
     }
 
@@ -46,7 +46,7 @@ public class CollectionHandler { //implements Comparable
         Route r = find_by_id(id);
         if (r != null) {
             routes.remove(r);
-            //System.out.printf("Removed route %s\n", r); TODO: add OutputHandler with an option to suppress output
+            OutputHandler.message("-- Removed route %s", r);
         }
     }
 
@@ -68,12 +68,12 @@ public class CollectionHandler { //implements Comparable
     public static void add_if_min(Route newRoute) {
         for (Route r: routes) {
             if (newRoute.compareTo(r) > 0) {
-                System.out.println("Route wasn't added, isn't min.");
+                OutputHandler.message("Route wasn't added, isn't min.");
                 return;
             }
         }
         routes.add(newRoute);
-        System.out.println("Route added!");
+        OutputHandler.message("Route added!");
     }
 
     public static void add(Route... newRoutes) {
@@ -87,7 +87,7 @@ public class CollectionHandler { //implements Comparable
     public static void filter_contains_name(String pattern) {
         for (Route r: routes) {
             if (r.getName().contains(pattern)) {
-                System.out.println(r);
+                OutputHandler.message(r);
             }
         }
     }
@@ -99,7 +99,7 @@ public class CollectionHandler { //implements Comparable
         Route[] sorted_routes = routes.toArray(new Route[routes.size()]);
         Arrays.sort(sorted_routes);
         for (Route r: sorted_routes) {
-            System.out.println(r);
+            OutputHandler.message(r);
         }
     }
 
@@ -111,26 +111,25 @@ public class CollectionHandler { //implements Comparable
         for (Route r: routes) {
             unqDist.add(r.getDistance());
         }
-        System.out.printf("Уникальные значения поля Distance:\n%s\n", unqDist);
+        OutputHandler.message("Уникальные значения поля Distance:\n%s", unqDist);
     }
 
     /**
      * Removes all Routes greater than specified Route.
      * @param newRoute Route to compare other objects with
      */
-    public static void remove_greater(Route newRoute) {
+    public static Route[] remove_greater(Route newRoute) {
         HashSet<Route> toRemove = new HashSet<>();
         for (Route r: routes) {
             if (newRoute.compareTo(r) < 0) {
                 toRemove.add(r);
-
             }
         }
         for (Route r: toRemove) {
             routes.remove(r);
-            System.out.printf("Route '%s' removed.\n", r);
+            OutputHandler.message("- Route '%s' removed.", r);
         }
-        toRemove.clear();
+        return toRemove.toArray(new Route[0]);
     }
 
     /**
@@ -140,7 +139,7 @@ public class CollectionHandler { //implements Comparable
      */
     public static void more(long id) {
         Route r = find_by_id(id);
-        if (r != null) {System.out.println(r.more());}
+        if (r != null) {OutputHandler.message(r.more());}
     }
 
     /**
@@ -154,7 +153,7 @@ public class CollectionHandler { //implements Comparable
                 return r;
             }
         }
-        System.out.printf("No Route with id '%s' found.\n", id);
+        OutputHandler.message("No Route with id '%s' found.", id);
         return null;
     }
 
@@ -162,10 +161,10 @@ public class CollectionHandler { //implements Comparable
      * Prints info about the collection.
      */
     public static void info() {
-        System.out.printf(" Collection type: %s\n" +
+        OutputHandler.message(" Collection type: %s\n" +
                           " Current size: %s\n" +
                           " Initialization time: %s\n" +
-                          " Coolness: 100\n", routes.getClass(), routes.size(), initTime);
+                          " Coolness: 100", routes.getClass(), routes.size(), initTime);
     }
 
     /**

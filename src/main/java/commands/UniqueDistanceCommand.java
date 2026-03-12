@@ -1,6 +1,6 @@
-package commands.info;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 import handlers.CollectionHandler;
 
 public class UniqueDistanceCommand implements Command {
@@ -12,5 +12,10 @@ public class UniqueDistanceCommand implements Command {
     @Override
     public void execute(String... args) {
         CollectionHandler.print_unique_distance();
+    }
+
+    @Override
+    public String getName() {
+        return "print_unique_distance";
     }
 }

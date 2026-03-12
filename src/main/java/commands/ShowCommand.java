@@ -1,6 +1,6 @@
-package commands.info;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 import handlers.CollectionHandler;
 
 public class ShowCommand implements Command {
@@ -8,5 +8,10 @@ public class ShowCommand implements Command {
 
     public void execute(String... args) {
         CollectionHandler.show();
+    }
+
+    @Override
+    public String getName() {
+        return "show";
     }
 }

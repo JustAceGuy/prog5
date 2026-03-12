@@ -1,8 +1,9 @@
-package commands.file;
+package commands;
 
-import commands.Command;
-import commands.Invoker;
+import commands.meta.Command;
+import commands.meta.Invoker;
 import handlers.InputHandler;
+import handlers.OutputHandler;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,7 +26,7 @@ public class ExecuteScriptCommand implements Command {
         Invoker.historyWritable = false;
 
         if (recursionDepth >= 100) {
-            System.out.println("Recursion depth reached! Returning.");
+            OutputHandler.message("Recursion depth reached! Returning.");
             recursionDepth = 0;
             return;
         }
@@ -41,15 +42,20 @@ public class ExecuteScriptCommand implements Command {
                 try {
                     Invoker.executeCommand(commandName, Arrays.copyOfRange(inp, 1, inp.length));
                 } catch (NullPointerException e) {
-                    System.out.println("Command not found. Try 'help'");
+                    OutputHandler.message("Command not found. Try 'help'");
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            OutputHandler.message("File not found.");
         } finally {
             InputHandler.sc = new Scanner(System.in);
             Invoker.historyWritable = true;
             recursionDepth--;
         }
+    }
+
+    @Override
+    public String getName() {
+        return "execute_script";
     }
 }

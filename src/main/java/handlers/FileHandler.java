@@ -20,9 +20,9 @@ public class FileHandler {
     static private String saveLocation = "save";
     static {
         String tmp = System.getenv("PROG_5_SAVE");
-        //System.out.println(tmp);
+        //OutputHandler.message(tmp);
         if (tmp!=null) {saveLocation = tmp;}
-        else {System.out.println("Could not get save location from environment. Using 'save' as default");}
+        else {OutputHandler.message("Could not get save location from environment. Using 'save' as default");}
     }
 
     /**
@@ -49,13 +49,13 @@ public class FileHandler {
             PrintWriter pw = new PrintWriter(f);
             pw.print(out);
             pw.close();
-            System.out.println("Successfully saved!");
+            OutputHandler.message("Successfully saved!");
         } catch (JsonProcessingException e) {
-            System.out.println("uhh bad file somehow");
+            OutputHandler.message("uhh bad file somehow");
         } catch (FileNotFoundException e) {
-            System.out.println("save file not found"); //how.
+            OutputHandler.message("save file not found"); //how.
         } catch (IOException e) {
-            System.out.println("IO fail");
+            OutputHandler.message("IO fail");
         }
     }
 
@@ -74,7 +74,7 @@ public class FileHandler {
         try {
             sc = new Scanner(new File(saveLocation));
         } catch (FileNotFoundException e) {
-            System.out.println("No save file found");
+            OutputHandler.message("No save file found");
             return;
         }
 
@@ -90,17 +90,17 @@ public class FileHandler {
                     Long tmpId = r.getId();
                     maxId = (tmpId > maxId) ? tmpId : maxId;
                 } else {
-                    System.out.println("Invalid route '" + r + "' ignored");
+                    OutputHandler.message("Invalid route '" + r + "' ignored");
                 }
 
             }
             CollectionHandler.setRoutes(out);
             Route.updateInstanceCounter(maxId+1);
-            System.out.println("Successfully loaded!");
-            if (out.isEmpty()) {System.out.println("Warning: save file was empty.");}
+            OutputHandler.message("Successfully loaded!");
+            if (out.isEmpty()) {OutputHandler.message("Warning: save file was empty.");}
         } catch (JsonProcessingException e) {
-                System.out.println(e.getMessage());
-                System.out.println("Save file corrupt!");
+                OutputHandler.message(e.getMessage());
+                OutputHandler.message("Save file corrupt!");
         } finally { Route.isLoading = false; }
 
 

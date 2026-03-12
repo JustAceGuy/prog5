@@ -1,6 +1,6 @@
-package commands.file;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 import handlers.FileHandler;
 
 public class LoadCommand implements Command {
@@ -12,5 +12,10 @@ public class LoadCommand implements Command {
     @Override
     public void execute(String... args) {
         FileHandler.load();
+    }
+
+    @Override
+    public String getName() {
+        return "load";
     }
 }

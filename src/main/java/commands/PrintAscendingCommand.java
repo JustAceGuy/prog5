@@ -1,6 +1,6 @@
-package commands.comparing;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 import handlers.CollectionHandler;
 
 public class PrintAscendingCommand implements Command {
@@ -12,5 +12,10 @@ public class PrintAscendingCommand implements Command {
     @Override
     public void execute(String... args) {
         CollectionHandler.print_ascending();
+    }
+
+    @Override
+    public String getName() {
+        return "print_ascending";
     }
 }

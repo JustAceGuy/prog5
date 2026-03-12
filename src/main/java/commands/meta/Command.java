@@ -1,4 +1,4 @@
-package commands;
+package commands.meta;
 
 import elements.Route;
 
@@ -18,6 +18,6 @@ public interface Command {
      * @return description
      */
     public String desc();
+    public String getName();
 
-    default public void undo(Route... routes) {}
 }

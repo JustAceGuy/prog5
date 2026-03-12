@@ -1,7 +1,8 @@
-package commands.extra;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 import handlers.CollectionHandler;
+import handlers.OutputHandler;
 
 public class MoreCommand implements Command {
     public String desc() {
@@ -13,12 +14,17 @@ public class MoreCommand implements Command {
         try {
             id = Long.parseLong(args[0]);
         } catch (NumberFormatException e) {
-            System.out.println("Bad argument!");
+            OutputHandler.message("Bad argument!");
             return;
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Provide a Route id number!");
+            OutputHandler.message("Provide a Route id number!");
             return;
         }
         CollectionHandler.more(id);
+    }
+
+    @Override
+    public String getName() {
+        return "more";
     }
 }

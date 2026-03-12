@@ -1,7 +1,8 @@
-package commands.info;
+package commands;
 
-import commands.Command;
-import commands.Invoker;
+import commands.meta.Command;
+import commands.meta.Invoker;
+import handlers.OutputHandler;
 
 import java.util.Map;
 
@@ -12,7 +13,12 @@ public class HelpCommand implements Command {
 
     public void execute(String... args) {
         for (Map.Entry<String, Command> c: Invoker.getCommands().entrySet()) {
-            System.out.printf("%s - %s\n", c.getKey(), c.getValue().desc());
+            OutputHandler.message("%s - %s", c.getKey(), c.getValue().desc());
         }
+    }
+
+    @Override
+    public String getName() {
+        return "help";
     }
 }

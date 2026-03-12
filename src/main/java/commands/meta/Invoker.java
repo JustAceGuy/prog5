@@ -1,19 +1,11 @@
-package commands;
+package commands.meta;
 
-import commands.basic.*;
-import commands.comparing.AddMinCommand;
-import commands.comparing.PrintAscendingCommand;
-import commands.comparing.RemoveGreaterCommand;
-import commands.extra.EchoCommand;
-import commands.extra.MoreCommand;
-import commands.extra.PSZHCommand;
-import commands.file.ExecuteScriptCommand;
-import commands.file.LoadCommand;
-import commands.file.SaveCommand;
-import commands.info.*;
+import commands.*;
 import elements.Route;
+import handlers.OutputHandler;
 
 import java.util.ArrayDeque;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -24,12 +16,12 @@ public class Invoker {
     static HashMap<String, Command> commands = new HashMap<>();
     static ArrayDeque<String> history_old = new ArrayDeque<>();
 
-    static Stack<HistoryEntry> history = new Stack<>();
-    static Stack<HistoryEntry> undoHistory = new Stack<>();
+    static Stack<Command> commandHistory = new Stack<>();
+    static Stack<Route[]> routeHistory = new Stack<>();
 
     public static boolean historyWritable = true;
 
-    static {
+    static { //TODO: get command name from the command
         // Meta
         commands.put("help", new HelpCommand());
         commands.put("exit", new ExitCommand());
@@ -61,6 +53,8 @@ public class Invoker {
         commands.put("echo", new EchoCommand());
         commands.put("load", new LoadCommand());
 
+        commands.put("undo", new UndoCommand());
+
     }
 
     /**
@@ -69,15 +63,16 @@ public class Invoker {
      * @param args command arguments
      */
     public static void executeCommand(String name, String... args) {
-        commands.get(name).execute(args);
-        addToHistory(name);
+        Command c = commands.get(name);
+        c.execute(args);
+        addToCommandHistory(c);
     }
 
     /**
      * Write a command to history.
      * @param name of the command to add
      */
-    private static void addToHistory(String name) {
+    private static void addToHistory_old(String name) {
         if (!historyWritable) {return;} // stops execute_script commands from being added
 
         history_old.add(name);
@@ -86,8 +81,26 @@ public class Invoker {
         }
     }
 
-    private static void addToHistory(Command c, Route... r) {
-        history.push(new HistoryEntry(c, r));
+    private static void addToCommandHistory(Command c) {
+        if (!(c instanceof UndoCommand)) {
+            commandHistory.push(c);
+        }
+    }
+
+    public static void addToRouteHistory(Route... r) {
+        routeHistory.push(r);
+    }
+
+    public static void undoHistory() {
+        try {
+        Command c = commandHistory.pop();
+        if (c instanceof Undoable) {
+            ((Undoable) c).undo(routeHistory.pop());
+            }
+        OutputHandler.message("- undone '" + c.getName() + "'");
+        } catch (EmptyStackException e) {
+            OutputHandler.message("Nothing to undo. \nTry doing something for once you lazy bum.");
+        }
     }
 
     /**
@@ -96,6 +109,10 @@ public class Invoker {
      */
     public static ArrayDeque<String> getHistory_old() {
         return history_old;
+    }
+
+    public static Stack<Command> getHistory() {
+        return commandHistory;
     }
 
     /**

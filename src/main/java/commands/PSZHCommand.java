@@ -1,6 +1,6 @@
-package commands.extra;
+package commands;
 
-import commands.Command;
+import commands.meta.Command;
 
 /**
  * ПСЖ
@@ -26,6 +26,11 @@ public class PSZHCommand implements Command {
                         ##      ##    ####           ## ## ##\s
                         ##      ##     #########    ### ## ###
                         ##      ##       #######    ##  ##  ##""");
+    }
+
+    @Override
+    public String getName() {
+        return "псж";
     }
 
 

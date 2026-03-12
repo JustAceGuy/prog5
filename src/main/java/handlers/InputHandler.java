@@ -16,7 +16,7 @@ public class InputHandler {
      * @return {@code true} if user input was 'y' or 'Y', {@code false} otherwise
      */
     public static boolean ynPrompt(String question) {
-        System.out.print(question + " (y/N)\n>>> ");
+        OutputHandler.messageRequest(question + " (y/N)");
         return sc.nextLine().strip().equalsIgnoreCase("y");
     }
 
@@ -30,13 +30,12 @@ public class InputHandler {
     public static String stringInput(String varName, boolean isNullable) {
         String ret;
 
-        System.out.print("Input " + varName + "\n>>> ");
-
         while (true) {
+            OutputHandler.messageRequest("Input " + varName);
             ret = sc.nextLine().strip();
             if (ret.isBlank()) {
                 if (isNullable) {return null;}
-                else {System.out.println(varName + " cannot be empty!");}
+                else {OutputHandler.message(varName + " cannot be empty!");}
             } else {
                 return ret;
             }
@@ -63,19 +62,19 @@ public class InputHandler {
             if (lowerBound != null) { request += "| >" + lowerBound.toString(); }
             if (upperBound != null) { request += "| <" + upperBound.toString(); }
         }
-        request = request.stripTrailing() + "]\n>>> ";
+        request = request.stripTrailing() + "]";
 
         while (badInput) {
             try {
-                System.out.print(request);
+                OutputHandler.messageRequest(request);
                 String temp = sc.nextLine();
                 if (temp.isBlank() && isNullable) {return null;}
                 ret = Long.parseLong(temp);
-                if (upperBound != null && ret >= upperBound) { System.out.println("Input out of range :("); }
-                else if (lowerBound != null && ret <= lowerBound) { System.out.println("Input out of range :("); }
+                if (upperBound != null && ret >= upperBound) { OutputHandler.message("Input out of range :("); }
+                else if (lowerBound != null && ret <= lowerBound) { OutputHandler.message("Input out of range :("); }
                 else { badInput = false; }
             } catch (NumberFormatException e) {
-                System.out.println("Bad input :(");
+                OutputHandler.message("Bad input :(");
             }
         }
         return ret;
@@ -101,19 +100,19 @@ public class InputHandler {
             if (lowerBound != null) { request += "| >" + lowerBound.toString() + " "; }
             if (upperBound != null) { request += "| <" + upperBound.toString() + " "; }
         }
-        request = request.stripTrailing() + "]\n>>> ";
+        request = request.stripTrailing() + "]";
 
         while (badInput) {
             try {
-                System.out.print(request);
+                OutputHandler.messageRequest(request);
                 String temp = sc.nextLine();
                 if (temp.isBlank() && isNullable) {return null;}
                 ret = Integer.parseInt(temp);
-                if (upperBound != null && ret >= upperBound) { System.out.println("Input out of range :("); }
-                else if (lowerBound != null && ret <= lowerBound) { System.out.println("Input out of range :("); }
+                if (upperBound != null && ret >= upperBound) { OutputHandler.message("Input out of range :("); }
+                else if (lowerBound != null && ret <= lowerBound) { OutputHandler.message("Input out of range :("); }
                 else { badInput = false; }
             } catch (NumberFormatException e) {
-                System.out.println("Bad input :(");
+                OutputHandler.message("Bad input :(");
             }
         }
         return ret;
@@ -140,19 +139,19 @@ public class InputHandler {
             if (lowerBound != null) { request += "| >" + lowerBound.toString(); }
             if (upperBound != null) { request += "| <" + upperBound.toString(); }
         }
-        request = request.stripTrailing() + "]\n>>> ";
+        request = request.stripTrailing() + "]";
 
         while (badInput) {
             try {
-                System.out.print(request);
+                OutputHandler.messageRequest(request);
                 String temp = sc.nextLine();
                 if (temp.isBlank() && isNullable) {return null;}
                 ret = Float.parseFloat(temp);
-                if (upperBound != null && ret >= upperBound) { System.out.println("Input out of range :("); }
-                else if (lowerBound != null && ret <= lowerBound) { System.out.println("Input out of range :("); }
+                if (upperBound != null && ret >= upperBound) { OutputHandler.message("Input out of range :("); }
+                else if (lowerBound != null && ret <= lowerBound) { OutputHandler.message("Input out of range :("); }
                 else { badInput = false; }
             } catch (NumberFormatException e) {
-                System.out.println("Bad input :(");
+                OutputHandler.message("Bad input :(");
             }
         }
         return ret;

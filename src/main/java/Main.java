@@ -1,10 +1,10 @@
-import commands.Invoker;
+import commands.meta.Invoker;
 import handlers.FileHandler;
 import handlers.InputHandler;
+import handlers.OutputHandler;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
@@ -19,11 +19,11 @@ class Main {
                 try {
                     Invoker.executeCommand(commandName, Arrays.copyOfRange(inp, 1, inp.length));
                 } catch (NullPointerException e) {
-                    System.out.println("Command not found. Try 'help'");
+                    OutputHandler.message("Command not found. Try 'help'");
                 } finally {
                     System.out.print(">> ");
                 }
             }
-        } catch (NoSuchElementException e) {System.out.println("got it!");}
+        } catch (NoSuchElementException e) {OutputHandler.message("got it!");}
     }
 }
