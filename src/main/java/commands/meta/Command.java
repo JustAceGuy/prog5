@@ -1,7 +1,5 @@
 package commands.meta;
 
-import elements.Route;
-
 /**
  * Command interface
  */

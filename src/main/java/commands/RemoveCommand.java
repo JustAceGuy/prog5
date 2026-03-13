@@ -27,7 +27,13 @@ public class RemoveCommand implements Command, Undoable {
     public void undo(Route... routes) {
         if (routes.length == 1) {
             CollectionHandler.add(routes[0]);
-            OutputHandler.message("");
+        } else { OutputHandler.message("rm.undo failed, bad argument");}
+    }
+
+    @Override
+    public void redo(Route... routes) {
+        if (routes.length == 1) {
+            CollectionHandler.remove_by_id(routes[0].getId());
         } else { OutputHandler.message("rm.undo failed, bad argument");}
     }
 

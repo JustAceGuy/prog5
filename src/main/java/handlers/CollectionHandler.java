@@ -42,22 +42,27 @@ public class CollectionHandler { //implements Comparable
      * Removes a {@code Route} with the specified id from the collection.
      * @param id id of the object to be removed, if present
      */
-    public static void remove_by_id(Long id) {
+    public static Route remove_by_id(Long id) {
         Route r = find_by_id(id);
         if (r != null) {
             routes.remove(r);
             OutputHandler.message("-- Removed route %s", r);
         }
+        return r;
     }
 
     /**
      * Updates the {@code Route} with the specified id.
+     *
      * @param id id of the object to be updated, if present
+     * @return an array consisting of oldRoute and newRoute
      */
-    public static void update_id(Long id) {
+    public static Route[] update_id(Long id) {
         Route r = find_by_id(id);
-        if (r == null) {return;}
-        r.update();
+        if (r == null) {
+            return null;
+        }
+        return new Route[]{r.clone(), r.update()};
     }
 
     /**
@@ -65,15 +70,16 @@ public class CollectionHandler { //implements Comparable
      * if it's less than all other present elements.
      * @param newRoute Route object to attempt to add.
      */
-    public static void add_if_min(Route newRoute) {
+    public static boolean add_if_min(Route newRoute) {
         for (Route r: routes) {
             if (newRoute.compareTo(r) > 0) {
                 OutputHandler.message("Route wasn't added, isn't min.");
-                return;
+                return false;
             }
         }
         routes.add(newRoute);
         OutputHandler.message("Route added!");
+        return true;
     }
 
     public static void add(Route... newRoutes) {

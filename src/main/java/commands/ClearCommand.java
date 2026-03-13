@@ -28,6 +28,11 @@ public class ClearCommand implements Command, Undoable {
     }
 
     @Override
+    public void redo(Route... routes) {
+        CollectionHandler.clear();
+    }
+
+    @Override
     public String getName() {
         return "clear";
     }

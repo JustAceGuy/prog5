@@ -6,7 +6,7 @@ import handlers.InputHandler;
 /**
  * Location class
  */
-public class Location {
+public class Location implements Cloneable{
     @JacksonXmlProperty
     private Long x;
     @JacksonXmlProperty
@@ -24,11 +24,23 @@ public class Location {
         this.name = InputHandler.stringInput("Location name", false);
     }
 
+    private Location(Location l){
+        this.x = l.x;
+        this.y = l.y;
+        this.z = l.z;
+        this.name = l.name;
+    }
+
     boolean validate() {
         return (y != null
                 && z != null
                 && name != null
                 && !name.isBlank());
+    }
+
+    @Override
+    protected Location clone() {
+        return new Location(this);
     }
 
     @Override

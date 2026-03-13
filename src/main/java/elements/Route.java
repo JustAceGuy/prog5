@@ -1,24 +1,17 @@
 package elements;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import handlers.InputHandler;
 import handlers.OutputHandler;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Route class - main class of the collection
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Route implements Comparable<Route> {
+public class Route implements Comparable<Route>, Cloneable{
 
     public static boolean isLoading = false;
 
@@ -28,10 +21,6 @@ public class Route implements Comparable<Route> {
     //[+] Поле не может быть null, Строка не может быть пустой
     @JacksonXmlProperty(isAttribute = true)
     private Coordinates coordinates; //[+]
-
-    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm.SSS")
-    //DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE;
-    //@JsonDeserialize(using = dtf)
     @JacksonXmlProperty(isAttribute = true)
     private LocalDateTime creationDate; //[+] Поле не может быть null, Значение этого поля должно генерироваться автоматически
     @JacksonXmlProperty(isAttribute = true)
@@ -61,15 +50,25 @@ public class Route implements Comparable<Route> {
         OutputHandler.message("-- New Route '%s' created!", this.name);
     }
 
+    private Route(Route r) {
+        this.id = r.id;
+        this.name = r.name;
+        this.coordinates = r.coordinates == null ? null : r.coordinates.clone();
+        this.creationDate = r.creationDate;
+        this.from = r.from == null? null : r.from.clone();
+        this.to = r.to == null? null : r.to.clone();
+        this.distance = r.distance;
+    }
+
     public boolean validate() {
         boolean r = (id != null
                 && !name.isBlank()
                 && coordinates != null
                 && coordinates.validate()
                 && creationDate != null
-                && (from == null ? true : from.validate())
-                && (to == null ? true : to.validate())
-                && (distance != null ? distance > 1 : false)
+                && (from == null || from.validate())
+                && (to == null || to.validate())
+                && (distance != null && distance > 1)
                 );
         return r;
     }
@@ -98,7 +97,7 @@ public class Route implements Comparable<Route> {
     /**
      * Prompts user to update one of Route object's fields
      */
-    public void update() {
+    public Route update() {
         OutputHandler.message(
                 "Which field to update?\n" +
                         "1. name\n" +
@@ -112,9 +111,10 @@ public class Route implements Comparable<Route> {
             case 2 -> this.coordinates = new Coordinates();
             case 3 -> this.from = new Location();
             case 4 -> this.to = new Location();
-            case 5 -> this.distance = InputHandler.longInput("distance", false, null, null);
+            case 5 -> this.distance = InputHandler.longInput("distance", false, null, 1L);
         }
         OutputHandler.message("Updated!");
+        return this;
     }
 
     /**
@@ -152,5 +152,8 @@ public class Route implements Comparable<Route> {
                 this.creationDate);
     }
 
-
+    @Override
+    public Route clone()  {
+        return new Route(this);
+    }
 }

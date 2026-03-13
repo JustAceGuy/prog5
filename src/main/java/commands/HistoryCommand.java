@@ -13,7 +13,7 @@ public class HistoryCommand implements Command {
     @Override
     public void execute(String... args) {
         for (Command s : Invoker.getHistory()) {
-            OutputHandler.message(s.getName());
+            OutputHandler.message(s);
         }
     }
 

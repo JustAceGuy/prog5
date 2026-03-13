@@ -3,19 +3,19 @@ package commands;
 import commands.meta.Command;
 import commands.meta.Invoker;
 
-public class UndoCommand implements Command {
+public class RedoCommand implements Command {
     @Override
     public String desc() {
-        return "undo ";
+        return "redo the last undone command";
     }
 
     @Override
     public void execute(String... args) {
-        Invoker.undo();
+        Invoker.redo();
     }
 
     @Override
     public String getName() {
-        return "undo";
+        return "redo";
     }
 }

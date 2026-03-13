@@ -18,9 +18,17 @@ public class AddCommand implements Command, Undoable {
     public void undo(Route... routes) {
         if (routes.length == 1) {
             CollectionHandler.remove_by_id(routes[0].getId());
-            //OutputHandler.message("^undo %s");
         } else {
             OutputHandler.message("Undo failed, bad argument");
+        }
+    }
+
+    @Override
+    public void redo(Route... routes) {
+        if (routes.length == 1) {
+            CollectionHandler.add(routes[0]);
+        } else {
+            OutputHandler.message("Redo failed, bad argument");
         }
     }
 

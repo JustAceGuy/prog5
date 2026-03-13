@@ -24,6 +24,13 @@ public class RemoveGreaterCommand implements Command, Undoable {
     }
 
     @Override
+    public void redo(Route... routes) {
+        if (routes.length == 1) {
+            CollectionHandler.remove_greater(routes[0]);
+        }
+    }
+
+    @Override
     public String getName() {
         return "remove_greater";
     }

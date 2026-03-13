@@ -18,6 +18,8 @@ public class Invoker {
 
     static Stack<Command> commandHistory = new Stack<>();
     static Stack<Route[]> routeHistory = new Stack<>();
+    static Stack<Command> commandUndone = new Stack<>();
+    static Stack<Route[]> routeUndone = new Stack<>();
 
     public static boolean historyWritable = true;
 
@@ -54,6 +56,7 @@ public class Invoker {
         commands.put("load", new LoadCommand());
 
         commands.put("undo", new UndoCommand());
+        commands.put("redo", new RedoCommand());
 
     }
 
@@ -66,6 +69,11 @@ public class Invoker {
         Command c = commands.get(name);
         c.execute(args);
         addToCommandHistory(c);
+        if ( !(c instanceof UndoCommand || c instanceof RedoCommand) ) {
+            commandUndone.clear();
+            routeUndone.clear();
+        }
+
     }
 
     /**
@@ -82,7 +90,7 @@ public class Invoker {
     }
 
     private static void addToCommandHistory(Command c) {
-        if (!(c instanceof UndoCommand)) {
+        if ( !(c instanceof UndoCommand || c instanceof RedoCommand) ) {
             commandHistory.push(c);
         }
     }
@@ -91,18 +99,33 @@ public class Invoker {
         routeHistory.push(r);
     }
 
-    public static void undoHistory() {
+    public static void undo() {
         try {
-        Command c = commandHistory.pop();
-        if (c instanceof Undoable) {
-            ((Undoable) c).undo(routeHistory.pop());
+            Command c = commandHistory.pop();
+            commandUndone.push(c);
+            if (c instanceof Undoable) {
+                routeUndone.push(routeHistory.pop());
+                ((Undoable) c).undo(routeUndone.peek());
             }
-        OutputHandler.message("- undone '" + c.getName() + "'");
+            OutputHandler.message("- undone '" + c.getName() + "'");
         } catch (EmptyStackException e) {
             OutputHandler.message("Nothing to undo. \nTry doing something for once you lazy bum.");
         }
     }
 
+    public static void redo() {
+        try {
+            Command c = commandUndone.pop();
+            commandHistory.push(c);
+            if (c instanceof Undoable) {
+                routeHistory.push(routeUndone.pop());
+                ((Undoable) c).redo(routeHistory.peek());
+            }
+            OutputHandler.message("- redone '" + c.getName() + "'");
+        } catch (EmptyStackException e) {
+            OutputHandler.message("Nothing to redo. \nTry doing something for once you lazy bum.");
+        }
+    }
     /**
      * Returns history
      * @return a list of last 15 commands

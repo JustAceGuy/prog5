@@ -11,8 +11,6 @@ class Main {
         FileHandler.load();
         System.out.print(">> ");
         try {
-
-
             while (InputHandler.sc.hasNext()) {
                 String[] inp = InputHandler.sc.nextLine().strip().split(" ");
                 String commandName = inp[0];
