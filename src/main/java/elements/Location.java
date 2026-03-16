@@ -2,6 +2,7 @@ package elements;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
+import handlers.InputValidator;
 
 /**
  * Location class
@@ -18,10 +19,12 @@ public class Location implements Cloneable{
 
     Location() {
         if (Route.isLoading) {return;}
-        this.x = InputHandler.longInput("Location x", true, null, null);
-        this.y = InputHandler.floatInput("Location y", false, null, null);
-        this.z = InputHandler.floatInput("Location z", false, null, null);
-        this.name = InputHandler.stringInput("Location name", false);
+        x = InputHandler.longInput("Location x", new InputValidator<Long>()
+                .nullable());
+
+        y = InputHandler.floatInput("Location y");
+        z = InputHandler.floatInput("Location z");
+        name = InputHandler.stringInput("Location name");
     }
 
     private Location(Location l){

@@ -3,8 +3,10 @@ package elements;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
+import handlers.InputValidator;
 import handlers.OutputHandler;
 
+import javax.xml.validation.Validator;
 import java.time.LocalDateTime;
 
 /**
@@ -36,7 +38,7 @@ public class Route implements Comparable<Route>, Cloneable{
         this.id = Route.instanceCounter++;
         this.creationDate = java.time.LocalDateTime.now();
 
-        this.name = InputHandler.stringInput("Route name", false);
+        this.name = InputHandler.stringInput("Route name");
 
         OutputHandler.message("Coordinates:");
         this.coordinates = new Coordinates();
@@ -44,7 +46,10 @@ public class Route implements Comparable<Route>, Cloneable{
         if (InputHandler.ynPrompt("Add 'from' Location?")) { this.from = new Location(); }
         if (InputHandler.ynPrompt("Add 'to' Location?")) { this.from = new Location(); }
 
-        this.distance = InputHandler.longInput("distance", false, null, 1L);
+        this.distance = InputHandler.longInput("distance",
+                new InputValidator<Long>()
+                        .lower(1L)
+        );
 
 
         OutputHandler.message("-- New Route '%s' created!", this.name);
@@ -105,13 +110,17 @@ public class Route implements Comparable<Route>, Cloneable{
                         "3. (Location) from\n" +
                         "4. (Location) to\n" +
                         "5. distance");
-        int n = InputHandler.intInput("number", false, 6, 0);
+        int n = InputHandler.intInput("number", new InputValidator<Integer>()
+                .upper(6)
+                .lower(0));
+
         switch (n) {
-            case 1 -> this.name = InputHandler.stringInput("name", false);
+            case 1 -> this.name = InputHandler.stringInput("name");
             case 2 -> this.coordinates = new Coordinates();
             case 3 -> this.from = new Location();
             case 4 -> this.to = new Location();
-            case 5 -> this.distance = InputHandler.longInput("distance", false, null, 1L);
+            case 5 -> this.distance = InputHandler.longInput("distance", new InputValidator<Long>()
+                                                                                 .lower(1L));
         }
         OutputHandler.message("Updated!");
         return this;

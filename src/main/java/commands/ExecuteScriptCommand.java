@@ -50,7 +50,6 @@ public class ExecuteScriptCommand implements Command, Undoable {
                     OutputHandler.message("Command not found. Try 'help'");
                 }
             }
-
             Invoker.addToRouteHistory(snapshot);
         } catch (FileNotFoundException e) {
             OutputHandler.message("File not found.");

@@ -2,6 +2,7 @@ package elements;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import handlers.InputHandler;
+import handlers.InputValidator;
 
 /**
  * Coordinates class
@@ -14,9 +15,17 @@ public class Coordinates implements Cloneable{
 
     public Coordinates() {
         if (Route.isLoading) {return;}
-        Integer tmp = InputHandler.intInput("x", true, 927, null);
-        if (tmp != null) {this.x = tmp;}
-        this.y = InputHandler.floatInput("y", false, null, -974f);
+
+        x = InputHandler.intInput("x",
+                new InputValidator<Integer>()
+                        .nullable()
+                        .upper(927)
+        );
+
+        y = InputHandler.floatInput("y",
+                new InputValidator<Float>()
+                        .lower(-974f)
+        );
     }
 
     private Coordinates(Coordinates c) {

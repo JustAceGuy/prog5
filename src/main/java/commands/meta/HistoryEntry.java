@@ -1,4 +1,3 @@
 package commands.meta;
 
-public record HistoryEntry(Command command, String... args) {
-}
+public record HistoryEntry(Command command, String... args) { }

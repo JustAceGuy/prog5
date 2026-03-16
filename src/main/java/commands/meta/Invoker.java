@@ -130,13 +130,6 @@ public class Invoker {
             OutputHandler.message("Nothing to redo. \nTry doing something for once you lazy bum.");
         }
     }
-    /**
-     * Returns history
-     * @return a list of last 15 commands
-     */
-    public static ArrayDeque<String> getHistory_old() {
-        return history_old;
-    }
 
     public static Stack<HistoryEntry> getHistory() {
         return commandHistory;
